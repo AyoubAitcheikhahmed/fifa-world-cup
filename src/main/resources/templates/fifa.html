@@ -1,59 +1,67 @@
 <!DOCTYPE html>
-<html lang="en">
-<link rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-      crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" ></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous">
-</script>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<html>
+
 <head>
     <meta charset="UTF-8">
-    <title>Fifa</title>
+    <title>Fifa World cup</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="stylesheet"
+          href=" https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css ">
+    <link rel="stylesheet"
+          href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" ></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous">
+    </script>
 </head>
+
 <body>
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="jumbotron">
-                <h2>
+
+
+
+
+<section class="pt-5 pb-5">
+    <div class="container my-5">
+        <div
+                class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
+            <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
+                <h1 class="display-4 fw-bold lh-1">
                     FIFA WORLD CUP QATAR 2022
-                </h2>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-4">
-            <h2>
-                <span>Chose one of the stadiums to display games</span>
-            </h2>
+                </h1>
+                <p class="lead"> Chose one of the stadiums to display the games
+                </p>
+                <form th:action="@{/display_games}" method="POST">
+                <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3">
 
-            <p>
-                <a class="btn" href="#"></a>
-            </p>
-        </div>
-        <div class="col-md-4">
-            <div class="dropdown">
-                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown">
-                    Stadiums
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="#">AL BAYT STADIUM</a>
-                    <a class="dropdown-item" href="/fifa">AL THUMAMA STADIUM</a>
+                    <select class="form-select form-select-primary" aria-label=".form-select-lg example"  name="stadium_name" >
+                        <option th:each=" stadium_item : ${stadiumList}"  th:text="${stadium_item.stadium}" th:value="${stadium_item.stadium}" ></option>
+                    </select>
+
+
+                    <button type="submit"
+                            class="btn btn-outline-primary btn-lg px-4">Execute</button>
                 </div>
+                </form>
+                <h2 class="text-success" style="margin-top: 10px;display: block" th:text="${active_display ==  'true' } ? ${'You successfully bought ' + purchased_tickets_number + ' tickets.'  } : ' '"></h2>
             </div>
-
-            <select th:each="item : ${stadiumList}">
-                <option th:value="${item.id}" th:text="${item.stadium}"></option>
-            </select>
-        </div>
-        <div class="col-md-4">
+            <div class="col-lg-4 offset-lg-1 p-0 overflow-hidden shadow-lg">
+                <img class="rounded"
+                     src="https://1.bp.blogspot.com/-pxozdKqf-PE/XW6mtLfrxPI/AAAAAAACEhc/szb0cqBIXGkHU-WzVeTIC6RgftVb94_TgCLcBGAs/s1600/00-qatar-2022-logo%2B%25288%2529.jpg" alt=""
+                     width="400">
+            </div>
         </div>
     </div>
-</div>
+</section>
 
-<!-- Optional JavaScript -->
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+
+
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>

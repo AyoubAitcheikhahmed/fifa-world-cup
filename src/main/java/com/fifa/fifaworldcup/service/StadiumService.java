@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface StadiumService {
     List<Stadium> getAllStadiums();
+    Stadium getStadiumByStadium(String stadium_name);
 }

@@ -7,6 +7,8 @@ import org.hibernate.annotations.TypeDefs;
 
 import javax.persistence.*;
 import java.lang.reflect.Array;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -24,27 +26,51 @@ public class Competition {
     @Column(name="game_countries")
     private List<String> countries;
 
-    @Temporal(TemporalType.DATE)
-    @Column(name="game_day")
-    private Date day;
+    @Column(name="game_date")
+    private LocalDate date;
+
+    @Column(name="game_hour")
+    private LocalTime hour;
+
 
     @Column(name="stadium_name")
     private String stadium;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="game_hour")
-    private Date hour;
+    @Column(name="nr_availableTickets")
+    private int availableTickets;
 
 
     public Competition() {
 
     }
 
-    public Competition(List<String> countries, Date day, String stadium, Date hour) {
+    public Competition(List<String> countries, LocalDate date,LocalTime hour, String stadium,int availableTickets ) {
+
         this.countries = countries;
-        this.day = day;
-        this.stadium = stadium;
+        this.date = date;
         this.hour = hour;
+        this.stadium = stadium;
+        this.availableTickets = availableTickets;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public int buyTicket(int tickets_number) {
+        System.out.println("TICKET NUMBER "+tickets_number);
+
+        if (tickets_number <= 0) {
+            return -1;
+        }
+
+        //tickets available
+        if (availableTickets >= tickets_number) {
+            this.availableTickets = this.availableTickets - tickets_number;
+            System.out.println("AVAILABLE TICKETs " + this.availableTickets);
+            return availableTickets;
+        }else{return 0;}
+
     }
 
     public List<String> getCountries() {
@@ -55,22 +81,39 @@ public class Competition {
         this.countries = countries;
     }
 
-    public Date getDay() {
-        return day;
+    public LocalDate getDate() {
+        return date;
     }
 
-    public void setDay(Date day) {
-        this.day = day;
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
-    public Date getHour() {
+    public LocalTime getHour() {
         return hour;
     }
 
-    public void setHour(Date hour) {
+    public void setHour(LocalTime hour) {
         this.hour = hour;
     }
 
+    public int getAvailableTickets() {
+        return availableTickets;
+    }
 
+    public void setAvailableTickets(int availableTickets) {
+        this.availableTickets = availableTickets;
+    }
 
+    public String getStadium() {
+        return stadium;
+    }
+
+    public void setStadium(String stadium) {
+        this.stadium = stadium;
+    }
+
+    public Long getId() {
+        return id;
+    }
 }

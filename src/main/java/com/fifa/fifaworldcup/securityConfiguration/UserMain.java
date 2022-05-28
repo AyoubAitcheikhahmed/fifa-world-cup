@@ -50,11 +50,11 @@ public class UserMain implements UserDetails {
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return this.user.getActive() == 1;
+        return true;
     }
 }

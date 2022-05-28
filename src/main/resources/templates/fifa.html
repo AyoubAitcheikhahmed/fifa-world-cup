@@ -36,6 +36,7 @@
                     [[#{app.title}]]
                 </h1>
                 <p class="lead">
+                    [[#{index.choose}]]
                 </p>
                 <form th:action="@{/display_games}" method="POST">
                 <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3">
@@ -46,7 +47,7 @@
 
 
                     <button type="submit"
-                            class="btn btn-outline-primary btn-lg px-4">[[#{button.execute }]]</button>
+                            class="btn btn-outline-primary btn-lg px-4">[[#{button.execute}]]</button>
                 </div>
                 </form>
                 <h2 class="text-success" style="margin-top: 10px;display: block" th:text="${active_display ==  'true' } ? ${'You successfully bought ' + purchased_tickets_number + ' tickets.'  } : ' '"></h2>

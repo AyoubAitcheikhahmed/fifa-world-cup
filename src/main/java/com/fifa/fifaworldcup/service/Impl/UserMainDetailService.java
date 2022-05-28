@@ -25,8 +25,9 @@ public class UserMainDetailService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         System.out.println("given USER NAME "+username);
         User user = userRepository.findByUsername(username);
-        System.out.println("user from repo >>>>>>>>>>>>>>>>>>>>>>"+user);
+        System.out.println("user from repo >>>>>>>>>>>>>>>>>>>>>>"+user.getPassword());
         UserMain userMain = new UserMain(user);
+        System.out.println("USER-MAIN >>>>> "+userMain);
         return userMain;
     }
 }

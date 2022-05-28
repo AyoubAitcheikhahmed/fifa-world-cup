@@ -33,9 +33,9 @@
                 class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
             <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
                 <h1 class="display-4 fw-bold lh-1">
-                    FIFA WORLD CUP QATAR 2022
+                    [[#{app.title}]]
                 </h1>
-                <p class="lead"> Chose one of the stadiums to display the games
+                <p class="lead">
                 </p>
                 <form th:action="@{/display_games}" method="POST">
                 <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3">
@@ -46,7 +46,7 @@
 
 
                     <button type="submit"
-                            class="btn btn-outline-primary btn-lg px-4">Execute</button>
+                            class="btn btn-outline-primary btn-lg px-4">[[#{button.execute }]]</button>
                 </div>
                 </form>
                 <h2 class="text-success" style="margin-top: 10px;display: block" th:text="${active_display ==  'true' } ? ${'You successfully bought ' + purchased_tickets_number + ' tickets.'  } : ' '"></h2>

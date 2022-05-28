@@ -36,7 +36,7 @@ public class CompetitionTicket {
 
     @Min(value = 1, message = "Number of tickets should be greather than 0")
     @Column(name="purchased_tickets")
-    private int tickets;
+    private Integer tickets;
     public CompetitionTicket() {
     }
 
@@ -72,11 +72,11 @@ public class CompetitionTicket {
         this.code2 = code2;
     }
 
-    public int getTickets() {
+    public Integer getTickets() {
         return tickets;
     }
 
-    public void setTickets(int tickets) {
+    public void setTickets(Integer tickets) {
         this.tickets = tickets;
     }
 

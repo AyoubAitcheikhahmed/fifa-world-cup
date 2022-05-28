@@ -7,6 +7,7 @@ import com.fifa.fifaworldcup.service.CompetitionService;
 import com.fifa.fifaworldcup.service.CompetitionTicketService;
 import com.fifa.fifaworldcup.service.StadiumService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,10 +18,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+
 
 @Controller
 public class HomeController {
@@ -35,13 +40,26 @@ public class HomeController {
         this.competitionTicketService = competitionTicketService;
     }
 
+
+
+    @GetMapping("login")
+    public String login(){
+        return "login";
+    }
     @GetMapping("/")
     public String index(
             @ModelAttribute("purchased_tickets_number") String purchased_tickets_number ,
-            Model model
+            Model model,
+            HttpServletRequest request
             ){
         model.addAttribute("stadiumList",stadiumService.getAllStadiums());
         String active_display;
+
+
+        Locale currentLocale = request.getLocale();
+
+
+
 
         try{
             int nr = Integer.parseInt(purchased_tickets_number);
@@ -79,7 +97,6 @@ public class HomeController {
    @PostMapping("/proceed_ticket")
     public String proceed_ticket(
             @Valid @ModelAttribute("new_ticket")CompetitionTicket current_ticket,
-            BindingResult theBindingResult,
             @RequestParam("game_id_ticket") Long game_id_ticket,
             Model model,
             Errors errors,
@@ -91,21 +108,29 @@ public class HomeController {
             return "purchase_ticket";
         }
 //        }else{
-//        //save new ticket
-//        competitionTicketService.save(current_ticket);
+        //save new ticket
+        competitionTicketService.save(current_ticket);
 //
 //
 //
-//       //Update entitiy
-//        int available_tickets = competitionService.getCompetition(game_id_ticket).buyTicket(current_ticket.getTicket());
-//
-//        //send new changes to REPO
-//        competitionService.updateAndSave(available_tickets,competitionService.getCompetition(game_id_ticket).getId());
-//        redirectAttributest.addAttribute("purchased_tickets_number",current_ticket.getTickets());
-//
+       //buy titcket
+       if(competitionService.getCompetition(game_id_ticket).buyTicket(current_ticket.getTicket()) <= 0){
+           String error_message = "Wrong ticket number input";
+           System.out.println("inside buy ticket error");
+           model.addAttribute("game",competitionService.getCompetition(game_id_ticket));
+           model.addAttribute("globalError",error_message);
+           return "purchase_ticket";
+       }
+       //Update entitiy
+        int available_tickets = competitionService.getCompetition(game_id_ticket).getAvailableTickets();
+       System.out.println("AVAILABLE TICKETS AFTER GETAVAILABLE TIcKETS "+available_tickets);
+        //send new changes to REPO
+        competitionService.updateAndSave(available_tickets,competitionService.getCompetition(game_id_ticket).getId());
+        redirectAttributest.addAttribute("purchased_tickets_number",current_ticket.getTickets());
+
 //       return "redirect:/";
 //          }
-            return "purchase_ticket";}
+            return "redirect:/";}
 
 }
 

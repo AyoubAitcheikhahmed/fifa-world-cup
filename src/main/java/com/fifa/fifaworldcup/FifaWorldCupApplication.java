@@ -2,12 +2,15 @@ package com.fifa.fifaworldcup;
 
 import com.fifa.fifaworldcup.entity.Competition;
 import com.fifa.fifaworldcup.entity.Stadium;
+import com.fifa.fifaworldcup.entity.User;
 import com.fifa.fifaworldcup.repository.CompetitionRepository;
 import com.fifa.fifaworldcup.repository.StadiumRepository;
+import com.fifa.fifaworldcup.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.sql.Date;
 import java.sql.Time;
@@ -15,25 +18,44 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @SpringBootApplication
 public class FifaWorldCupApplication    implements CommandLineRunner {
 
-    public static void main(String[] args) {
-        SpringApplication.run(FifaWorldCupApplication.class, args);
-    }
-
-
+    private PasswordEncoder passwordEncoder;
+    @Autowired
+    UserRepository userRepository;
     @Autowired
     CompetitionRepository competitionRepository;
     @Autowired
     StadiumRepository stadiumRepository;
+
+    public FifaWorldCupApplication(PasswordEncoder passwordEncoder, UserRepository userRepository, CompetitionRepository competitionRepository, StadiumRepository stadiumRepository) {
+        this.passwordEncoder = passwordEncoder;
+        this.userRepository = userRepository;
+        this.competitionRepository = competitionRepository;
+        this.stadiumRepository = stadiumRepository;
+    }
+
+    public static void main(String[] args) {
+            SpringApplication.run(FifaWorldCupApplication.class, args);
+    }
+
+
+
+
     @Override
     public void run(String... args) throws Exception {
+
+
+
+        User admin = new User("admin",passwordEncoder.encode("admin"),1,"ADMIN","");
+        User user = new User("bani",passwordEncoder.encode("bani"),1,"USER","");
+
+        List<User> users = Arrays.asList(admin,user);
+        userRepository.saveAll(users);
+
         //public Competition(List<String> countries, Date day, String stadium, Date hour) {
         List<String> countries1 = new ArrayList<>();
         Collections.addAll(countries1,"Belgium","Canada");

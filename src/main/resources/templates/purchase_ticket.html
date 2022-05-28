@@ -33,41 +33,46 @@
           class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
           <div class="col-lg-12 p-3 p-lg-5 pt-lg-3">
             <h1 class="display-4 fw-bold lh-1" >
-              FIFA WORLD CUP QATAR 2022
+              [[#{app.title}]]
             </h1>
             <hr>
-            <h2 style="margin-top: 50px">Stadium </h2>
+            <h2 style="margin-top: 50px">[[#{word.stadium}]]  </h2>
             <h2 style="margin-top: 10px;display: block" th:text="${game.stadium}"></h2>
             <h3 th:text="${game.countries[0] +' VS ' + game.countries[1]}"></h3>
-            <h3 th:text="'Number of available tickets: ' + ${game.availableTickets}"> </h3>
+            <h3 >[[#{word.numberAvailableTickets}]] </h3>
+            <h3 th:text="${game.availableTickets}"> </h3>
+            <p  class="text-danger fw-bolder" style="margin: 10px 0px" th:text="${globalError}"></p>
+
+
+
             <hr>
 
             <form th:action="@{/proceed_ticket}" th:object="${new_ticket}"  method="POST">
-              <input type="text"   th:value="${game.id}" name="game_id_ticket"/>
+              <input type="hidden"   th:value="${game.id}" name="game_id_ticket"/>
                 <div class="form-group" style="margin-bottom: 10px" >
-                  <label  style="margin-bottom: 5px" th:text="${game.id}">Email:</label>
+                  <label  style="margin-bottom: 5px" >[[#{form.email}]]</label>
                   <input type="email" class="form-control" placeholder="Enter email" name="email" th:field = "*{email}" >
-                  <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="alert alert-danger"></p>
+                  <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="alert alert-danger" style="margin: 10px 0px"></p>
                 </div>
                 <div class="form-group" style="margin-bottom: 10px" >
-                  <label  style="margin-bottom: 5px">Number of tickets:</label>
-                  <input type="number" class="form-control" placeholder="Enter number of tickets" name="tickets" th:field = "*{tickets}">
-                  <p th:if="${#fields.hasErrors('tickets')}" th:errors="*{tickets}" class="alert alert-danger"></p>
+                  <label  style="margin-bottom: 5px">[[#{form.numberTickets}]]</label>
+                  <input type="number" class="form-control" placeholder="Enter number of tickets" th:name="tickets"   >
+                  <p th:if="${#fields.hasErrors('tickets')}" th:errors="*{tickets}" class="alert alert-danger" style="margin: 10px 0px"></p>
                 </div>
                 <div class="form-group" style="margin-bottom: 10px" >
-                    <label for="code1" style="margin-bottom: 5px">Soccer code 1:</label>
-                    <input type="number" class="form-control" id="code1" th:value="10" name="code1" th:field = "*{code1}">
-                    <p th:if="${#fields.hasErrors('code1')}" th:errors="*{code1}" class="alert alert-danger"></p>
+                    <label style="margin-bottom: 5px">[[#{form.code1}]]</label>
+                    <input type="number" class="form-control" th:name="code1" th:value="10" >
+                    <p th:if="${#fields.hasErrors('code1')}" th:errors="*{code1}" class="alert alert-danger" style="margin: 10px 0px"> </p>
                   </div>
                   <div class="form-group" style="margin-bottom: 20px" >
-                    <label style="margin-bottom: 5px">Soccer code 2:</label>
-                    <input type="number" class="form-control"  name="code2" th:field = "*{code2}" th:value="${20}">
-                    <p th:if="${#fields.hasErrors('code2')}" th:errors="*{code2}" class="alert alert-danger"></p>
+                    <label style="margin-bottom: 5px">[[#{form.code2}]]</label>
+                    <input type="number" class="form-control"  th:name="code2" th:value="20" >
+                    <p th:if="${#fields.hasErrors('code2')}" th:errors="*{code2}" class="alert alert-danger" style="margin: 10px 0px"></p>
                   </div>
 
 
                 <button type="submit"
-                class="btn btn-outline-primary btn-lg px-4" style="margin-bottom: 10px" >Purchase</button>
+                class="btn btn-outline-primary btn-lg px-4" style="margin-bottom: 10px" >[[#{form.buy}]]</button>
             </form>
 
             

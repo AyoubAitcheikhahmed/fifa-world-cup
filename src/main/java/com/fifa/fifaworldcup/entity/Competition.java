@@ -37,14 +37,14 @@ public class Competition {
     private String stadium;
 
     @Column(name="nr_availableTickets")
-    private int availableTickets;
+    private Integer availableTickets;
 
 
     public Competition() {
 
     }
 
-    public Competition(List<String> countries, LocalDate date,LocalTime hour, String stadium,int availableTickets ) {
+    public Competition(List<String> countries, LocalDate date,LocalTime hour, String stadium,Integer availableTickets ) {
 
         this.countries = countries;
         this.date = date;
@@ -57,19 +57,21 @@ public class Competition {
         this.id = id;
     }
 
-    public int buyTicket(int tickets_number) {
-        System.out.println("TICKET NUMBER "+tickets_number);
+    public Integer buyTicket(Integer tickets_number) {
 
+        //WRONG TICKET INPUT >>> -1
         if (tickets_number <= 0) {
             return -1;
         }
 
-        //tickets available
+        //TICKET NUMBER CORRED + TICKETS ARE AVAILABLE  TICKET INPUT >>> RETURN NUMBER OF TICKET BOUGHT
         if (availableTickets >= tickets_number) {
             this.availableTickets = this.availableTickets - tickets_number;
-            System.out.println("AVAILABLE TICKETs " + this.availableTickets);
-            return availableTickets;
-        }else{return 0;}
+            return tickets_number;
+        }else{
+            System.out.println("inside return 0 available tickets is not enough ");
+            //TICKETS ARE NOT AVAILABLE
+            return 0;}
 
     }
 
@@ -97,11 +99,11 @@ public class Competition {
         this.hour = hour;
     }
 
-    public int getAvailableTickets() {
+    public Integer getAvailableTickets() {
         return availableTickets;
     }
 
-    public void setAvailableTickets(int availableTickets) {
+    public void setAvailableTickets(Integer availableTickets) {
         this.availableTickets = availableTickets;
     }
 
